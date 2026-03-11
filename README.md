@@ -57,7 +57,7 @@ python data_preprocessing.py
 ````
 ### 2. 依照提示輸入須處理的json檔，以及輸出檔案的位置
 ```bash
-python data_preprocessing.py --input ./data/your_file.json --output your_output_file
+python data_preprocessing.py --input ./data/your_file.json --output ./output/
 ```
 
 例如：python data_preprocessing.py --input ./data/all_raw.json --output ./output/
