@@ -3,6 +3,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import re
 import os
+import argparse
+
 
 # 工具函式 (Data Cleaning Tools)==================================================
 def normalize_text(text):
@@ -46,7 +48,7 @@ def extract_rumor(raw_rumor):
     return ""
 
 # 核心處理邏輯 (Core Logic)========================================================
-def process_tfc_data(input_file):
+def process_tfc_data(input_file, output_dir):
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -80,15 +82,32 @@ def process_tfc_data(input_file):
 
     # 輸出
     df = pd.DataFrame(processed_list)
-    df.to_csv("tfc_processed.csv", index=False, encoding='utf-8-sig')
-    df.to_json("tfc_processed.json", orient='records', force_ascii=False, indent=4)
-    print(f"成功處理 {len(processed_list)} 筆資料！已生成 tfc_processed.csv 與 tfc_processed.json")
+    csv_path = os.path.join(output_dir, "tfc_processed.csv")
+    json_path = os.path.join(output_dir, "tfc_processed.json")
+    
+    df.to_csv(csv_path, index=False, encoding='utf-8-sig')
+    df.to_json(json_path, orient='records', force_ascii=False, indent=4)
+    print(f"成功處理 {len(processed_list)} 筆資料！")
+    print(f"檔案已儲存至: {csv_path} 與 {json_path}")
+
+def main():
+    # 1. 建立 ArgumentParser 物件
+    parser = argparse.ArgumentParser(description="TFC 資料前處理工具")
+
+    # 2. 加入參數設定
+    parser.add_argument('--input', type=str, required=True, help='原始 JSON 檔案路徑')
+    parser.add_argument('--output', type=str, default='./', help='輸出檔案所在的目錄路徑')
+
+    # 3. 解析參數
+    args = parser.parse_args()
+
+    # 確保輸出目錄存在
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
+
+    # 傳遞參數給處理函式
+    process_tfc_data(args.input, args.output)
 
 # 主程式入口 (Main Entry Point)====================================================
 if __name__ == "__main__":
-    input_file = input("請輸入原始 JSON 檔名 (例如 all_raw.json): ").strip()
-    
-    if os.path.exists(input_file):
-        process_tfc_data(input_file)
-    else:
-        print(f"找不到檔案 '{input_file}'，請確認檔案是否在同一個資料夾。")
+    main()

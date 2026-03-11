@@ -1,69 +1,78 @@
-===========================================================
-       # TFC 台灣事實查核中心 - 資料前處理工具 使用說明
-===========================================================
+# TFC 台灣事實查核中心 - 資料前處理工具 使用說明
 
-## 1. 程式簡介
------------
-本工具 (data_preprocessing.py) 專為處理台灣事實查核中心 (TFC) 的原始 JSON 
-資料集而設計。它會自動執行以下動作：
-- **清理 HTML 標籤**: 如 <p>, <div>, <span>。
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+
+本專案專為處理台灣事實查核中心 (TFC) 的原始 JSON 資料集而設計。
+data_preprocessing.py 執行以下動作：
+- **清理 HTML 標籤**: 如 `<p>`, `<div>`, `<span>`。
 - **正規化文字**: 壓縮多餘空格、換行，避免 CSV 格式跑版。
 - **格式化日期**: 僅保留 YYYY-MM-DD。
 - **解析複雜的原始謠言結構**: 從 orig_rumor 欄位提取純文字。
 - **輸出標準化的 CSV 與 JSON 檔案**
 
-2. 環境需求
------------
-執行前請確保您的電腦已安裝 Python，並安裝以下必要套件：
+## 專案架構
 
-```bash
-   pip install pandas beautifulsoup4
+```text
+NICS_Data_Preprocessing/
+├── data/                         # input data (.json)
+├── data_preprocessing.py         # 資料前處理 script
+├── requirements.txt              # Python 安裝套件
+├── .gitignore.txt
+└── README.md
 ```
 
-3. 資料夾準備
--------------
-請確保以下檔案放在「同一個資料夾」內：
-- data_preprocessing.py **資料前處理的程式碼**
-- all_raw.json **請改成您要處理的檔案**
+## 安裝
 
-4. 執行步驟
------------
-1. 開啟 CMD (命令提示字元) 或 Terminal。
-2. 切換至您要放置該資料夾的位置：
+### 1.切換至您的目標路徑
 ```bash
-   cd /d "C:\您的路徑\NICS"
+cd 資料夾存放路徑
+git clone https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git
 ```
-3. 從github上複製到本地
+
+### 2. 建立虛擬環境
+`macOS/Linux`
 ```bash
-   git clone https://github.com/joanhsieh17-gif/NICS-Data-Preprocessing.git
+python3 -m venv venv
+source venv/bin/activate
 ```
-4. 執行程式：
+
+`Windows`
 ```bash
-   python data_preprocessing.py
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+### 3. 安裝套件
+```bash
+pip install -r requirements.txt
+```
+
+## 執行
+### 1. 執行前處理程式
+```bash
+python data_preprocessing.py
 ````
-5. 依照提示：
-   - 輸入檔名：例如輸入「all_raw.json」後按 Enter。
-   - 直接按 Enter：程式會預設抓取「all_raw.json」。
+### 2. 依照提示輸入處理的json檔，以及輸出檔案的位置
+```bash
+python data_preprocessing.py --input ./data/your_file.json --output your_output_file
+```
 
-5. 輸出結果說明
----------------
+例如：python data_preprocessing.py --input ./data/all_raw.json --output ./output/
+
+## 輸出結果
 程式執行完成後，會產出以下兩個檔案：
 
-(1) tfc_processed.csv：
-    - 編碼：utf-8-sig (Excel 直接開啟不亂碼)。
-    - 用途：方便人工檢視、統計、標註資料。
+(1) tfc_processed.csv
 
-(2) tfc_processed.json：
-    - 格式：Records (List of Dictionaries)。
-    - 特點：已排除 Unicode 編碼，可直接閱讀中文字，適合模型訓練。
+(2) tfc_processed.json
 
-6. 欄位對應表
--------------
-[ 輸出欄位 ]      [ 原始欄位來源 ]         [ 說明 ]
-- 原始謠言        node > orig_rumor        清理後的謠言純文字
-- 查核日期        node > updated_time      僅保留日期 YYYY-MM-DD
-- 分類            node > article_category  主題分類 (如: 健康、生活)
-- 查核單位        (固定值)                 TFC
-- 查核報告標題    node > title             報告正式大標題
-- 查核報告連結    node > node_url          官方原始網址
-- 分類標籤        node > taxo_report_attr  查核結果 (如: 錯誤)
+## 欄位對應表
+| 輸出欄位 | 原始資料來源 (JSON) | 說明 |
+| :--- | :--- | :--- |
+| **原始謠言** | `node > orig_rumor` | 清理後的謠言純文字 |
+| **查核日期** | `node > updated_time` | 僅保留日期 `YYYY-MM-DD` |
+| **分類** | `node > article_category` | 主題分類 (如: 健康、生活) |
+| **查核單位** | 固定值 | 標註為 `TFC` |
+| **查核報告標題** | `node > title` | 報告正式大標題 |
+| **查核報告連結** | `node > node_url` | 官方原始網址 |
+| **分類標籤** | `node > taxo_report_attr` | 查核結果 (如: 錯誤) |
