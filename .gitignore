@@ -1,0 +1,8 @@
+# 排除處理後的產出檔與原始大檔案
+tfc_processed.csv
+tfc_processed.json
+all_raw.json
+
+# 排除 Python 快取
+__pycache__/
+*.pyc
