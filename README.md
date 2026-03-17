@@ -3,6 +3,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 
 本專案專為處理台灣事實查核中心 (TFC) 的原始 JSON 資料集而設計。
+
 data_preprocessing.py 執行以下動作：
 - **清理 HTML 標籤**: 如 `<p>`, `<div>`, `<span>`。
 - **正規化文字**: 壓縮多餘空格、換行，避免 CSV 格式跑版。
@@ -14,10 +15,11 @@ data_preprocessing.py 執行以下動作：
 
 ```text
 NICS_Data_Preprocessing/
-├── data/                         # input data (.json)
-├── data_preprocessing.py         # 資料前處理 script
-├── requirements.txt              # Python 安裝套件
-├── .gitignore.txt
+├── data/                         # 存放原始json資料
+├── output/                       # 處理後的csv/json存放位置
+├── data_preprocessing.py         # 主要處理程式
+├── requirements.txt              # 依賴套件清單
+├── .gitignore
 └── README.md
 ```
 
@@ -27,6 +29,7 @@ NICS_Data_Preprocessing/
 ```bash
 cd 資料夾存放路徑
 git clone https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git
+cd NICS_Data_Preprocessing
 ```
 
 ### 2. 建立虛擬環境
@@ -41,6 +44,8 @@ source venv/bin/activate
 python -m venv venv
 .\venv\Scripts\activate
 ```
+若虛擬環境取不同名稱，請自行加入.gitignore
+例如：venv/ --> change_name/
 
 ### 3. 安裝套件
 ```bash
@@ -48,13 +53,9 @@ pip install -r requirements.txt
 ```
 
 ## 執行
-### 1. 執行前處理程式
+### 執行前處理程式，並依照提示輸入須處理的json檔，以及輸出檔案的位置
 ```bash
-python data_preprocessing.py
-````
-### 2. 依照提示輸入處理的json檔，以及輸出檔案的位置
-```bash
-python data_preprocessing.py --input ./data/your_file.json --output your_output_file
+python data_preprocessing.py --input ./data/your_file.json --output ./output/
 ```
 
 例如：python data_preprocessing.py --input ./data/all_raw.json --output ./output/
