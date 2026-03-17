@@ -44,6 +44,8 @@ source venv/bin/activate
 python -m venv venv
 .\venv\Scripts\activate
 ```
+若虛擬環境取不同名稱，請自行加入.gitignore
+例如：venv/ --> change_name/
 
 ### 3. 安裝套件
 ```bash
@@ -51,11 +53,7 @@ pip install -r requirements.txt
 ```
 
 ## 執行
-### 1. 執行前處理程式
-```bash
-python data_preprocessing.py
-````
-### 2. 依照提示輸入須處理的json檔，以及輸出檔案的位置
+### 執行前處理程式，並依照提示輸入須處理的json檔，以及輸出檔案的位置
 ```bash
 python data_preprocessing.py --input ./data/your_file.json --output ./output/
 ```
