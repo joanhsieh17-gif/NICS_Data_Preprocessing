@@ -1,1 +1,2 @@
-pip install pandas beautifulsoup4
+pandas
+beautifulsoup4
