@@ -96,7 +96,7 @@ def main():
 
     # 2. 加入參數設定
     parser.add_argument('--input', type=str, required=True, help='原始 JSON 檔案路徑')
-    parser.add_argument('--output', type=str, default='./', help='輸出檔案所在的目錄路徑')
+    parser.add_argument('--output', type=str, default='./output', help='輸出檔案所在的目錄路徑')
 
     # 3. 解析參數
     args = parser.parse_args()
