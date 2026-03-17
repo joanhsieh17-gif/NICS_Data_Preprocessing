@@ -29,7 +29,15 @@ NICS_Data_Preprocessing/
 ### 1.切換至您的目標路徑
 ```bash
 cd 資料夾存放路徑
+```
+
+```bash
+# 複製本資料夾
 git clone https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git
+```
+
+```bash
+# 進入本專案資料夾
 cd NICS_Data_Preprocessing
 ```
 
@@ -46,7 +54,10 @@ python -m venv venv
 .\venv\Scripts\activate
 ```
 若虛擬環境取不同名稱，請自行加入.gitignore
-例如：venv/ --> change_name/
+例如：
+```bash
+venv/ --> change_name/
+```
 
 ### 3. 安裝套件
 ```bash
@@ -143,7 +154,10 @@ pip install -r requirements.txt
 ```bash
 python data_preprocessing.py --input ./data/your_file.json --output ./output/
 ```
-Example:python data_preprocessing.py --input ./data/all_raw.json --output ./output/
+Example
+```bash
+python data_preprocessing.py --input ./data/all_raw.json --output ./output/
+```
 
 ## Output Results
 After the script completes, the following two files will be generated in your output folder:
