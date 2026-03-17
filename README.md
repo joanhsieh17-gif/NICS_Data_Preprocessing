@@ -1,4 +1,5 @@
 # TFC 台灣事實查核中心 - 資料前處理工具 使用說明
+`English Version Below`
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 
@@ -77,3 +78,88 @@ python data_preprocessing.py --input ./data/your_file.json --output ./output/
 | **查核報告標題** | `node > title` | 報告正式大標題 |
 | **查核報告連結** | `node > node_url` | 官方原始網址 |
 | **分類標籤** | `node > taxo_report_attr` | 查核結果 (如: 錯誤) |
+
+# TFC Taiwan FactCheck Center - Data Preprocessing Tool
+
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+
+This project is specifically designed to process raw JSON datasets from the **Taiwan FactCheck Center (TFC)**.
+
+`data_preprocessing.py` performs the following operations:
+- **HTML Tag Cleaning**: Removes tags such as `<p>`, `<div>`, and `<span>`.
+- **Text Normalization**: Compresses redundant spaces and newlines to prevent formatting issues in CSV output.
+- **Date Formatting**: Standardizes dates to `YYYY-MM-DD`.
+- **Complex Structure Parsing**: Extracts plain text from the nested `orig_rumor` field.
+- **Standardized Output**: Generates clean CSV and JSON files for further analysis.
+
+## Project Structure
+
+```text
+NICS_Data_Preprocessing/
+├── data/                 # Location for raw input JSON files
+├── output/               # Location for processed CSV/JSON files
+├── data_preprocessing.py # Main preprocessing script
+├── requirements.txt      # List of Python dependencies
+├── .gitignore            # Files to be ignored by Git
+└── README.md             # Project documentation
+```
+
+## Installation
+
+### 1.Navigate to Your Target Directory
+```bash
+# Navigate to your preferred folder
+cd /path/to/your/directory
+
+# Clone the repository
+git clone [https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git](https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git)
+
+# Enter the project directory
+cd NICS_Data_Preprocessing
+```
+
+### 2.Set Up Virtual Environment
+`macOS/Linux`
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+`Windows`
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+Note: If you name your virtual environment something other than venv/, please remember to update your .gitignore accordingly (e.g., replace venv/ with your_custom_name/).
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Run the preprocessing script by specifying the input JSON file and output directory.
+```bash
+python data_preprocessing.py --input ./data/your_file.json --output ./output/
+```
+Example:python data_preprocessing.py --input ./data/all_raw.json --output ./output/
+
+## Output Results
+After the script completes, the following two files will be generated in your output folder:
+
+(1) tfc_processed.csv
+
+(2) tfc_processed.json
+
+## Field Mapping Table
+
+| Output Field | Original Data Source (JSON) | Description |
+| :--- | :--- | :--- |
+| **Original Rumor** | `node > orig_rumor` | Cleaned plain text of the rumor |
+| **Verification Date** | `node > updated_time` | Date format: `YYYY-MM-DD` |
+| **Category** | `node > article_category` | Subject category (e.g., Health, Lifestyle) |
+| **Organization** | Fixed Value | Labeled as `TFC` |
+| **Report Title** | `node > title` | Official title of the fact-check report |
+| **Report Link** | `node > node_url` | Direct URL to the official report |
+| **Classification Tag** | `node > taxo_report_attr` | Verification result (e.g., False) |
