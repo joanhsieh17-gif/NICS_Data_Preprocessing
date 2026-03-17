@@ -28,7 +28,8 @@ NICS_Data_Preprocessing/
 
 ### 1.切換至您的目標路徑
 ```bash
-cd 資料夾存放路徑
+# 選擇資料夾存放路徑
+cd /path/to/your/directory
 
 # 複製本資料夾
 git clone https://github.com/joanhsieh17-gif/NICS_Data_Preprocessing.git
@@ -50,6 +51,7 @@ python -m venv venv
 .\venv\Scripts\activate
 ```
 若虛擬環境取不同名稱，請自行加入.gitignore
+
 例如：venv/ --> change_name/
 
 ### 3. 安裝套件
